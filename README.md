@@ -7,6 +7,7 @@ wip - lightweight librato reporting client in go
 
 * easy to reason about
 * use mutexes, don't abuse channels
+* lean on `net/http` to do the right thing
 
 ## Usage
 
