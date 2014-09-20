@@ -3,6 +3,11 @@ librato
 
 wip - lightweight librato reporting client in go
 
+## Goals
+
+* easy to reason about
+* use mutexes, don't abuse channels
+
 ## Usage
 
 ```go
