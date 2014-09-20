@@ -44,4 +44,4 @@ func main() {
 ## TODO
 
 * [ ] documentation of funcs
-* [ ] support for measure_time, min, max and sum_squares
+* [x] support for measure_time, min, max and sum_squares

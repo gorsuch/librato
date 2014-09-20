@@ -4,17 +4,21 @@ import (
 	"bytes"
 	"encoding/json"
 	"fmt"
+	"log"
 	"net/http"
 	"sync"
+	"time"
 )
 
 type Gauge struct {
-	Name   string  `json:"name"`
-	Source string  `json:"source"`
-	Count  int64   `json:"count"`
-	Sum    float64 `json:"sum"`
-	Min    float64 `json:"min"`
-	Max    float64 `json:"max"`
+	Name        string  `json:"name"`
+	MeasureTime int64   `json:"measure_time"`
+	Source      string  `json:"source"`
+	Count       int64   `json:"count"`
+	Sum         float64 `json:"sum"`
+	Min         float64 `json:"min",omitempty`
+	Max         float64 `json:"max",omitempty`
+	SumSquares  float64 `json:"max",omitempty`
 }
 
 type Payload struct {
@@ -31,6 +35,9 @@ type Client struct {
 func (c *Client) AddGauge(g Gauge) {
 	c.Lock()
 	defer c.Unlock()
+	if g.MeasureTime == 0 {
+		g.MeasureTime = time.Now().Unix()
+	}
 	c.payload.Gauges = append(c.payload.Gauges, g)
 }
 
@@ -42,6 +49,8 @@ func (c *Client) Flush() error {
 	if err != nil {
 		return err
 	}
+
+	log.Print(string(b))
 
 	req, err := http.NewRequest(
 		"POST",
