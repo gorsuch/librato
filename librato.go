@@ -4,7 +4,6 @@ import (
 	"bytes"
 	"encoding/json"
 	"fmt"
-	"log"
 	"net/http"
 	"sync"
 	"time"
@@ -49,8 +48,6 @@ func (c *Client) Flush() error {
 	if err != nil {
 		return err
 	}
-
-	log.Print(string(b))
 
 	req, err := http.NewRequest(
 		"POST",
